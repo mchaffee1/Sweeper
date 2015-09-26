@@ -11,6 +11,7 @@ import SweeperCore
 
 class SweeperGridViewController: UICollectionViewController {
 
+    @IBOutlet weak var NewButton: UIBarButtonItem!
     // MARK: Private Properties
     
     private let reuseIdentifier = "UIMineSquare"
@@ -33,20 +34,30 @@ class SweeperGridViewController: UICollectionViewController {
     
     // Load a new board when the view loads.
     override func viewDidLoad() {
-        NSLog("bounds = %@", NSStringFromCGRect(self.view.bounds));
-    
+
+        setUpToolbar()
+        
         loadNewBoard()
         
         super.viewDidLoad()
     }
 
+    private func setUpToolbar() {
+//        let sel = Selector("NewButtonClicked")
+//        NewButton.action = sel
+    }
+    
     // MARK: - Custom Operations
+
+    private func NewButtonClicked() {
+        loadNewBoard()
+    }
     
     // Load a new board.
     private func loadNewBoard() {
         let gridSize = self.gridSize()
         
-        mineBoard = MineBoard(width: gridSize.width, height: gridSize.height, minePercent: 0.25)
+        mineBoard = MineBoard(width: gridSize.width, height: gridSize.height, minePercent: 0.1)
     }
     
     // Calculate the grid size in squares.
@@ -55,6 +66,16 @@ class SweeperGridViewController: UICollectionViewController {
         let x = bounds.width / squareSize.width
         let y = bounds.height / squareSize.height
         return (width: Int(x), height: Int(y))
+    }
+    
+    func squareClicked(atIndex index: Int) {
+        mineBoard.Click1d(index)
+
+        // TODO:  Make the flicker thing really go away
+        let animationsEnabled = UIView.areAnimationsEnabled()
+        UIView.setAnimationsEnabled(false)
+        self.collectionView?.reloadData()
+        UIView.setAnimationsEnabled(animationsEnabled)
     }
 
     // MARK: - Basic CollectionView operations
@@ -75,6 +96,8 @@ class SweeperGridViewController: UICollectionViewController {
     // - Tell the cell to render that square
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! MineSquareCell
+        
+        cell.Attach(toViewController: self, atIndex: indexPath.row)
         
         let gameSquare = gameSquareForIndexPath(indexPath)
 

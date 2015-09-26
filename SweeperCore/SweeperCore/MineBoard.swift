@@ -33,7 +33,7 @@ public class MineBoard {
         var mines = [Bool](count: self.squareCount, repeatedValue: false);
         for var i = 0; i < self.mineCount; i++ {
             // TODO: Prevent double-assigning to same square
-            mines[Int(arc4random_uniform(UInt32(self.mineCount)))] = true
+            mines[Int(arc4random_uniform(UInt32(self.squareCount)))] = true
         }
         
         // Now build self.squares.
@@ -79,24 +79,46 @@ public class MineBoard {
         return GameSquare(self.squares[index])
     }
     
-    // Click is called when the user clicks a square.
+    // Call Click when a user clicks a square and it's referenced by 2-d coordinates.
+    public func Click(x: Int, _ y: Int) -> [GameSquare] {
+        if let square = self.SquareAt(x, y) {
+            return ClickSquare(square)
+        }
+        return [GameSquare]()
+    }
+    
+    // Call Click1d when a user clicks a square and it's referenced by 1-d coordinate.
+    // Note again that the 1-d order of squares is left-to-right, top-to-bottom.
+    public func Click1d(index: Int) -> [GameSquare] {
+        if index < 0 || index >= self.squareCount { return [GameSquare]() }
+        
+        return ClickSquare(self.squares[index])
+    }
+    
+    // ClickSquare is called from either the 1-d or 2-d method above
+    // when the user clicks a square.
     // - Get an array of all changed MapSquares from the target square's Click() method
     // - Transform that array into an array of GameSquares and return it
     // - Return an empty array if no squares are changed (e.g. user clicks on an already-clicked square)
     // - Return all squares with mines, if the user clicks on a mine
-    public func Click(x: Int, _ y: Int) -> [GameSquare] {
-        if let square = self.SquareAt(x, y) {
-            let squares = square.Clicked()
-            let result = squares.ToGameSquares()
+    func ClickSquare(square: MineSquare!) -> [GameSquare] {
+        if square == nil { return [GameSquare]() }
+        
+        let squares = square.Clicked()
+        let result = squares.ToGameSquares()
+        
+        // This next block will only fire if the user clicked on a mine.
+        if result.count == 1 && result[0].HasMine {
+            let mines = self.squares.filter({ $0.HasMine })
             
-            // This next block will only fire if the user clicked on a mine.
-            if result.count == 1 && result[0].HasMine {
-                return self.squares.filter({ $0.HasMine }).ToGameSquares()
+            for var mine in mines {
+                mine.Clicked()
             }
             
-            return result
+            return mines.ToGameSquares()
         }
-        return [GameSquare]()
+        
+        return result
     }
     
     // MARK: - Helper methods

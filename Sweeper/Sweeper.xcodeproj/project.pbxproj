@@ -8,13 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		6077B96E1BB6F78E0000B54D /* SweeperGridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6077B96D1BB6F78E0000B54D /* SweeperGridViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		6077B9701BB6FB670000B54D /* FlickrSearcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6077B96F1BB6FB670000B54D /* FlickrSearcher.swift */; settings = {ASSET_TAGS = (); }; };
 		6077B9741BB700180000B54D /* SweeperCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6077B9731BB700180000B54D /* SweeperCore.framework */; };
 		6077B9761BB703550000B54D /* MineSquareCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6077B9751BB703550000B54D /* MineSquareCell.swift */; settings = {ASSET_TAGS = (); }; };
+		6077B9771BB7274C0000B54D /* SweeperCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6077B9731BB700180000B54D /* SweeperCore.framework */; };
+		6077B9781BB7274C0000B54D /* SweeperCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6077B9731BB700180000B54D /* SweeperCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		60873BCF1BB4A89700D79EE6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60873BCE1BB4A89700D79EE6 /* AppDelegate.swift */; };
 		60873BD41BB4A89700D79EE6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60873BD21BB4A89700D79EE6 /* Main.storyboard */; };
 		60873BD61BB4A89700D79EE6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60873BD51BB4A89700D79EE6 /* Assets.xcassets */; };
-		60873BD91BB4A89700D79EE6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60873BD71BB4A89700D79EE6 /* LaunchScreen.storyboard */; };
 		60873BE41BB4A89800D79EE6 /* SweeperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60873BE31BB4A89800D79EE6 /* SweeperTests.swift */; };
 		60873BEF1BB4A89800D79EE6 /* SweeperUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60873BEE1BB4A89800D79EE6 /* SweeperUITests.swift */; };
 		60873BFD1BB4AA0500D79EE6 /* MineSquareButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60873BFC1BB4AA0500D79EE6 /* MineSquareButton.swift */; settings = {ASSET_TAGS = (); }; };
@@ -37,16 +37,28 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		6077B9791BB7274C0000B54D /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				6077B9781BB7274C0000B54D /* SweeperCore.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		6077B96D1BB6F78E0000B54D /* SweeperGridViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SweeperGridViewController.swift; sourceTree = "<group>"; };
-		6077B96F1BB6FB670000B54D /* FlickrSearcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrSearcher.swift; sourceTree = "<group>"; };
 		6077B9731BB700180000B54D /* SweeperCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SweeperCore.framework; path = "../../../Library/Developer/Xcode/DerivedData/Sweeper-foipuyiruroikvcdljtgckvfnwwk/Build/Products/Debug-iphoneos/SweeperCore.framework"; sourceTree = "<group>"; };
 		6077B9751BB703550000B54D /* MineSquareCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineSquareCell.swift; sourceTree = "<group>"; };
 		60873BCB1BB4A89700D79EE6 /* Sweeper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sweeper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		60873BCE1BB4A89700D79EE6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		60873BD31BB4A89700D79EE6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		60873BD51BB4A89700D79EE6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		60873BD81BB4A89700D79EE6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		60873BDA1BB4A89700D79EE6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		60873BDF1BB4A89800D79EE6 /* SweeperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SweeperTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		60873BE31BB4A89800D79EE6 /* SweeperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SweeperTests.swift; sourceTree = "<group>"; };
@@ -63,6 +75,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6077B9741BB700180000B54D /* SweeperCore.framework in Frameworks */,
+				6077B9771BB7274C0000B54D /* SweeperCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -109,9 +122,7 @@
 			children = (
 				60873BCE1BB4A89700D79EE6 /* AppDelegate.swift */,
 				60873BD21BB4A89700D79EE6 /* Main.storyboard */,
-				6077B96F1BB6FB670000B54D /* FlickrSearcher.swift */,
 				60873BD51BB4A89700D79EE6 /* Assets.xcassets */,
-				60873BD71BB4A89700D79EE6 /* LaunchScreen.storyboard */,
 				60873BDA1BB4A89700D79EE6 /* Info.plist */,
 				60873BFC1BB4AA0500D79EE6 /* MineSquareButton.swift */,
 				6077B96D1BB6F78E0000B54D /* SweeperGridViewController.swift */,
@@ -148,6 +159,7 @@
 				60873BC71BB4A89700D79EE6 /* Sources */,
 				60873BC81BB4A89700D79EE6 /* Frameworks */,
 				60873BC91BB4A89700D79EE6 /* Resources */,
+				6077B9791BB7274C0000B54D /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -241,7 +253,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				60873BD91BB4A89700D79EE6 /* LaunchScreen.storyboard in Resources */,
 				60873BD61BB4A89700D79EE6 /* Assets.xcassets in Resources */,
 				60873BD41BB4A89700D79EE6 /* Main.storyboard in Resources */,
 			);
@@ -272,7 +283,6 @@
 				6077B96E1BB6F78E0000B54D /* SweeperGridViewController.swift in Sources */,
 				60873BFD1BB4AA0500D79EE6 /* MineSquareButton.swift in Sources */,
 				6077B9761BB703550000B54D /* MineSquareCell.swift in Sources */,
-				6077B9701BB6FB670000B54D /* FlickrSearcher.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -314,14 +324,6 @@
 				60873BD31BB4A89700D79EE6 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		60873BD71BB4A89700D79EE6 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				60873BD81BB4A89700D79EE6 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
