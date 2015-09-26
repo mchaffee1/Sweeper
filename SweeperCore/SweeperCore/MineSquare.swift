@@ -15,6 +15,7 @@ class MineSquare {
     let Board: MineBoard; // The board that contains this square
     let x: Int; // x index in the board.
     let y: Int; // y index in the board.
+    let index: Int; // 1-d index in the board (l-to-r, top-to-bottom)
     var HasMine = false; // True if there's a mine on this square
     var IsFlagged = false;  // True if the user has planted a flag on this mine
     var IsVisible = false;  // True if this square should show its state (neighbor mine count)
@@ -22,10 +23,11 @@ class MineSquare {
     var Neighbors = [MineSquare](); // Pointers to the mine's <=8 neighbors, clockwise from top
     var NeighborMineCount = 0;  // Number of neighbor squares containing mines.  This will be built at the same time as the Neighbors array.
     
-    init(inBoard: MineBoard, atX: Int, atY: Int) {
+    init(inBoard: MineBoard, atX: Int, atY: Int, atIndex: Int) {
         self.Board = inBoard;
         self.x = atX;
         self.y = atY;
+        self.index = atIndex;
     }
     
     // Call this to add one neighbor to the Neighbors property, incrementing NeighborMineCount if appropriate.
@@ -47,6 +49,12 @@ class MineSquare {
         
         if !self.IsClicked {
             self.IsClicked = true
+            
+            // Return only this square if we just tripped a mine.  That's the signal to the Board that we have a problem.
+            if self.HasMine {
+                result.append(self)
+                return result
+            }
             result = self.NeighborClicked()
         }
         
@@ -81,7 +89,7 @@ class MineSquare {
             }
             
             if self.NeighborMineCount == 0 {
-                for neighbor in self.Neighbors {
+                for var neighbor in self.Neighbors.filter( {!$0.IsVisible}) {
                     result += neighbor.NeighborClicked()
                 }
             }

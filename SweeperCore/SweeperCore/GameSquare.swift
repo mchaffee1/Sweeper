@@ -13,6 +13,7 @@ import Foundation
 public struct GameSquare {
     public let x: Int
     public let y: Int
+    public let index: Int
     public let NeighborMineCount: Int
     public let IsFlagged: Bool
     public let HasMine: Bool
@@ -20,6 +21,7 @@ public struct GameSquare {
     init(_ square: MineSquare) {
         x = square.x;
         y = square.y;
+        index = square.index;
         NeighborMineCount = (square.IsVisible ? square.NeighborMineCount : -1)
         IsFlagged = square.IsFlagged
         HasMine = square.IsClicked ? square.HasMine : false

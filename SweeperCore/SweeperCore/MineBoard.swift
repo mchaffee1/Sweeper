@@ -40,7 +40,7 @@ public class MineBoard {
         self.squares = [MineSquare]()
         for var i = 0; i < self.squareCount; i++ {
             let coords = CoordinatesOfIndex(i)
-            let square = MineSquare(inBoard: self, atX: coords.x, atY: coords.y)
+            let square = MineSquare(inBoard: self, atX: coords.x, atY: coords.y, atIndex: i)
             square.HasMine = mines[i]
             self.squares.append(square)
         }
@@ -114,6 +114,10 @@ public class MineBoard {
             for var mine in mines {
                 mine.Clicked()
             }
+
+            // For testing purposes.
+//            let coords = mines.map({return String(format: "%d,%d ", $0.x, $0.y)}).reduce("", combine: {$0 + $1})
+//            print(coords)
             
             return mines.ToGameSquares()
         }
