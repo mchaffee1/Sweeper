@@ -18,13 +18,14 @@ class MineSquareButton  : UIButton {
     
     private let blueTint = UIColor.blueColor()
     private let redTint = UIColor.redColor()
+    private let greenTint = UIColor.greenColor()
     
     var gameSquare: GameSquare?
-
-
-    func renderGameSquare(square: GameSquare) {
+    
+    
+    func renderGameSquare(square: GameSquare, forGameState state: GameState) {
         self.gameSquare = square;
-
+        
         // These are the default attributes (for an untouched cell).  Modify if needed before it all sets up at the end.
         var title = ""
         var backgroundColor = untouchedColor
@@ -46,17 +47,24 @@ class MineSquareButton  : UIButton {
         }
         
         if square.HasMine {
-            title = "BLAM"
-            backgroundColor = touchedColor
-            tintColor = redTint
+            if state == .Won {
+                title = "WIN"
+                backgroundColor = greenTint
+                tintColor = UIColor.whiteColor()
+            }
+            else {
+                title = "BLAM"
+                backgroundColor = touchedColor
+                tintColor = redTint
+            }
         }
-    }
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
+        /*
+        // Only override drawRect: if you perform custom drawing.
+        // An empty implementation adversely affects performance during animation.
+        override func drawRect(rect: CGRect) {
         // Drawing code
+        }
+        */
+        
     }
-    */
-
 }

@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="kim-eR-gaA">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Sweeper Grid View Controller-->
@@ -19,16 +20,16 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="UIMineSquare" id="r6g-ei-epR" customClass="MineSquareCell" customModule="Sweeper" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MineSquareCell" id="r6g-ei-epR" customClass="MineSquareCell" customModule="Sweeper" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oue-UT-nJ9" customClass="MineSquareButton" customModule="Sweeper" customModuleProvider="target">
-                                            <rect key="frame" x="2" y="10" width="46" height="30"/>
-                                            <state key="normal" title="Button"/>
+                                        <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oue-UT-nJ9" customClass="MineSquareButton" customModule="Sweeper" customModuleProvider="target">
+                                            <rect key="frame" x="1" y="1" width="48" height="48"/>
+                                            <state key="normal" title="1"/>
                                             <connections>
                                                 <action selector="mineButton_TouchUpInside:" destination="r6g-ei-epR" eventType="touchUpInside" id="Jl7-xz-ZtK"/>
                                             </connections>
@@ -36,6 +37,22 @@
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
+                                <constraints>
+                                    <constraint firstItem="Oue-UT-nJ9" firstAttribute="leading" secondItem="r6g-ei-epR" secondAttribute="leadingMargin" id="2fI-1u-ovq"/>
+                                    <constraint firstItem="Oue-UT-nJ9" firstAttribute="top" secondItem="r6g-ei-epR" secondAttribute="topMargin" id="5di-gB-SG5"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="Oue-UT-nJ9" secondAttribute="trailing" id="YKu-ge-BNt"/>
+                                    <constraint firstAttribute="bottomMargin" secondItem="Oue-UT-nJ9" secondAttribute="bottom" id="ra8-ib-2HC"/>
+                                </constraints>
+                                <edgeInsets key="layoutMargins" top="16" left="16" bottom="16" right="16"/>
+                                <size key="customSize" width="50" height="50"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="2fI-1u-ovq"/>
+                                        <exclude reference="5di-gB-SG5"/>
+                                        <exclude reference="YKu-ge-BNt"/>
+                                        <exclude reference="ra8-ib-2HC"/>
+                                    </mask>
+                                </variation>
                                 <connections>
                                     <outlet property="mineButton" destination="Oue-UT-nJ9" id="dk1-zk-Z1a"/>
                                 </connections>
@@ -56,6 +73,9 @@
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="j9O-oY-Kyx"/>
                     </toolbarItems>
                     <navigationItem key="navigationItem" id="4fW-F1-Us1"/>
+                    <connections>
+                        <outlet property="gridView" destination="wok-rn-hyj" id="AOR-NQ-HvM"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CU9-JZ-uJq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

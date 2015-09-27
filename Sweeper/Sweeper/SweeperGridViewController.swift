@@ -11,13 +11,14 @@ import SweeperCore
 
 class SweeperGridViewController: UICollectionViewController {
     
-    @IBOutlet weak var NewButton: UIBarButtonItem!
     @IBAction func newButtonAction(sender: AnyObject) {
         loadNewBoard()
     }
+    @IBOutlet var gridView: UICollectionView!
+    
     // MARK: Private Properties
     
-    private let reuseIdentifier = "UIMineSquare"
+    private let reuseIdentifier = "MineSquareCell"
     
     // We set the squareSize value here, and impose it via the sizeForItemAtIndexPath operation below.
     // That's so we have an authoritative size value when we calculate the size of the game board in squares.
@@ -25,6 +26,8 @@ class SweeperGridViewController: UICollectionViewController {
     
     // mineBoard gets properly instantiated in LoadNewBoard()
     private var mineBoard = MineBoard(width:1, height:1, minePercent:0)
+    
+    private var gameState = GameState.Unstarted
     
     // This function returns a GameSquare corresponding to the 1-d index of a given cell.
     // Traversal is left-to-right, top-to-bottom.
@@ -38,6 +41,13 @@ class SweeperGridViewController: UICollectionViewController {
     // Load a new board when the view loads.
     override func viewDidLoad() {
         
+//        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+//        layout.sectionInset = UIEdgeInsets(top: 20, left: 0, bottom: 10, right: 0)
+//        layout.itemSize = squareSize
+//        layout.minimumInteritemSpacing = 0.0
+//        layout.minimumLineSpacing = 0.0
+//        gridView.setCollectionViewLayout(layout, animated: false)
+        
         loadNewBoard()
         
         super.viewDidLoad()
@@ -50,7 +60,9 @@ class SweeperGridViewController: UICollectionViewController {
     }
     
     // Load a new board.
+    // TODO:  Offer difficulty options.
     private func loadNewBoard() {
+        self.gameState = .Unstarted
         let gridSize = self.gridSize()
         
         mineBoard = MineBoard(width: gridSize.width, height: gridSize.height, minePercent: 0.1)
@@ -68,19 +80,20 @@ class SweeperGridViewController: UICollectionViewController {
     
     // Respond to a user click on a square.
     func squareClicked(atIndex index: Int) {
-        let changes = mineBoard.Click1d(index)
-        
-        let animationsEnabled = UIView.areAnimationsEnabled()
-        UIView.setAnimationsEnabled(false)
-        self.collectionView?.reloadItemsAtIndexPaths(
-            changes.map({return NSIndexPath(forRow: $0.index, inSection: 0)})
-        )
-        UIView.setAnimationsEnabled(animationsEnabled)
+        if self.gameState == .Won || self.gameState == .Lost { return }
+        processChanges(mineBoard.Click1d(index))
     }
     
     // Receive a list of changed cells and (hopefully gracefully) change them in the CollectionView.
-    func processChanges(changes: [GameSquare]) {
-        
+    func processChanges(changes: GameStatus) {
+        self.gameState = changes.State
+        let animationsEnabled = UIView.areAnimationsEnabled()
+        UIView.setAnimationsEnabled(false)
+        defer { UIView.setAnimationsEnabled(animationsEnabled) }
+
+        self.collectionView?.reloadItemsAtIndexPaths(
+            changes.Squares.map({return NSIndexPath(forRow: $0.index, inSection: 0)})
+        )
     }
     
     // MARK: - Basic CollectionView operations
@@ -100,15 +113,15 @@ class SweeperGridViewController: UICollectionViewController {
     // - Get the square for that location from the MineBoard
     // - Tell the cell to render that square
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! MineSquareCell
         
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! MineSquareCell
+
         cell.Attach(toViewController: self, atIndex: indexPath.row)
         
         let gameSquare = gameSquareForIndexPath(indexPath)
         
-        cell.RenderGameSquare(gameSquare)
+        cell.RenderGameSquare(gameSquare, forGameState: self.gameState)
         
-        // Configure the cell
         return cell
     }
     

@@ -125,8 +125,8 @@
 				60873BD51BB4A89700D79EE6 /* Assets.xcassets */,
 				60873BDA1BB4A89700D79EE6 /* Info.plist */,
 				60873BFC1BB4AA0500D79EE6 /* MineSquareButton.swift */,
-				6077B96D1BB6F78E0000B54D /* SweeperGridViewController.swift */,
 				6077B9751BB703550000B54D /* MineSquareCell.swift */,
+				6077B96D1BB6F78E0000B54D /* SweeperGridViewController.swift */,
 			);
 			path = Sweeper;
 			sourceTree = "<group>";

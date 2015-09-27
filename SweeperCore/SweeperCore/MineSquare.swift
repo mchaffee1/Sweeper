@@ -74,6 +74,14 @@ class MineSquare {
         return result
     }
     
+    // Pass in end-of-game results here.
+    func RegisterFinish(state: GameState) {
+        if state == .Won {
+            self.IsVisible = true;
+            self.IsClicked = true;
+        }
+    }
+    
     // Call this when a neighbor to this square was clicked.  (also called on the square that was clicked, if it doesn't contain a mine)
     // 1) Bail out if this method has already been called on this square
     // 2) Set Self.IsVisible to True if !self.IsVisible and !self.IsFlagged (flagged cells don't halt propagation but also don't show themselves)

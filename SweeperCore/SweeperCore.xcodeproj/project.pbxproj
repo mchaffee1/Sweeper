@@ -10,7 +10,7 @@
 		60873B981BB4A6D800D79EE6 /* SweeperCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 60873B971BB4A6D800D79EE6 /* SweeperCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		60873B9F1BB4A6D900D79EE6 /* SweeperCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60873B941BB4A6D800D79EE6 /* SweeperCore.framework */; settings = {ASSET_TAGS = (); }; };
 		60873BA41BB4A6D900D79EE6 /* SweeperCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60873BA31BB4A6D900D79EE6 /* SweeperCoreTests.swift */; };
-		60873BB11BB4A6FD00D79EE6 /* GameSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60873BAE1BB4A6FD00D79EE6 /* GameSquare.swift */; settings = {ASSET_TAGS = (); }; };
+		60873BB11BB4A6FD00D79EE6 /* GameStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60873BAE1BB4A6FD00D79EE6 /* GameStatus.swift */; settings = {ASSET_TAGS = (); }; };
 		60873BB21BB4A6FD00D79EE6 /* MineBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60873BAF1BB4A6FD00D79EE6 /* MineBoard.swift */; settings = {ASSET_TAGS = (); }; };
 		60873BB31BB4A6FD00D79EE6 /* MineSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60873BB01BB4A6FD00D79EE6 /* MineSquare.swift */; settings = {ASSET_TAGS = (); }; };
 		60873BBF1BB4A7A300D79EE6 /* BoardBuildTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60873BBC1BB4A7A300D79EE6 /* BoardBuildTests.swift */; settings = {ASSET_TAGS = (); }; };
@@ -35,7 +35,7 @@
 		60873B9E1BB4A6D900D79EE6 /* SweeperCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SweeperCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		60873BA31BB4A6D900D79EE6 /* SweeperCoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SweeperCoreTests.swift; sourceTree = "<group>"; };
 		60873BA51BB4A6D900D79EE6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		60873BAE1BB4A6FD00D79EE6 /* GameSquare.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameSquare.swift; sourceTree = "<group>"; };
+		60873BAE1BB4A6FD00D79EE6 /* GameStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameStatus.swift; sourceTree = "<group>"; };
 		60873BAF1BB4A6FD00D79EE6 /* MineBoard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineBoard.swift; sourceTree = "<group>"; };
 		60873BB01BB4A6FD00D79EE6 /* MineSquare.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineSquare.swift; sourceTree = "<group>"; };
 		60873BBC1BB4A7A300D79EE6 /* BoardBuildTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardBuildTests.swift; sourceTree = "<group>"; };
@@ -83,7 +83,7 @@
 		60873B961BB4A6D800D79EE6 /* SweeperCore */ = {
 			isa = PBXGroup;
 			children = (
-				60873BAE1BB4A6FD00D79EE6 /* GameSquare.swift */,
+				60873BAE1BB4A6FD00D79EE6 /* GameStatus.swift */,
 				60873BAF1BB4A6FD00D79EE6 /* MineBoard.swift */,
 				60873BB01BB4A6FD00D79EE6 /* MineSquare.swift */,
 				60873B971BB4A6D800D79EE6 /* SweeperCore.h */,
@@ -212,7 +212,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				60873BB11BB4A6FD00D79EE6 /* GameSquare.swift in Sources */,
+				60873BB11BB4A6FD00D79EE6 /* GameStatus.swift in Sources */,
 				60873BB21BB4A6FD00D79EE6 /* MineBoard.swift in Sources */,
 				60873BB31BB4A6FD00D79EE6 /* MineSquare.swift in Sources */,
 			);
@@ -403,6 +403,7 @@
 				60873BAA1BB4A6D900D79EE6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		60873BAB1BB4A6D900D79EE6 /* Build configuration list for PBXNativeTarget "SweeperCoreTests" */ = {
 			isa = XCConfigurationList;
@@ -411,6 +412,7 @@
 				60873BAD1BB4A6D900D79EE6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

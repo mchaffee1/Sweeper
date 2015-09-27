@@ -29,7 +29,7 @@ class MineSquareCell: UICollectionViewCell {
         self.index = atIndex
     }
     
-    func RenderGameSquare(square: GameSquare) {
-        mineButton.renderGameSquare(square)
+    func RenderGameSquare(square: GameSquare, forGameState state: GameState) {
+        mineButton.renderGameSquare(square, forGameState: state)
     }
 }

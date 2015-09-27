@@ -27,3 +27,29 @@ public struct GameSquare {
         HasMine = square.IsClicked ? square.HasMine : false
     }
 }
+
+// Struct to contain the status of the game.
+// Members currently are state and squares changed in last move.
+public struct GameStatus {
+    public let State: GameState
+    public let Squares: [GameSquare]
+    
+    public init(_ state: GameState)
+    {
+        self.init(withState: state, withSquares: [GameSquare]())
+    }
+    
+    public init(withState state: GameState, withSquares squares: [GameSquare])
+    {
+        self.State = state;
+            self.Squares = squares;
+    }
+}
+
+// Lis of possible states that the game could be in.
+public enum GameState {
+    case Unstarted
+    case Ongoing
+    case Won
+    case Lost
+}

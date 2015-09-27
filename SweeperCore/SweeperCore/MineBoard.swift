@@ -16,6 +16,7 @@ public class MineBoard {
     var height = 0;
     var squareCount = 0;
     var mineCount = 0;
+    var gameState = GameState.Unstarted
     
     // MARK: - Public properties
     public var Width: Int { get { return self.width } }
@@ -80,17 +81,17 @@ public class MineBoard {
     }
     
     // Call Click when a user clicks a square and it's referenced by 2-d coordinates.
-    public func Click(x: Int, _ y: Int) -> [GameSquare] {
+    public func Click(x: Int, _ y: Int) -> GameStatus {
         if let square = self.SquareAt(x, y) {
             return ClickSquare(square)
         }
-        return [GameSquare]()
+        return GameStatus(self.gameState)
     }
     
     // Call Click1d when a user clicks a square and it's referenced by 1-d coordinate.
     // Note again that the 1-d order of squares is left-to-right, top-to-bottom.
-    public func Click1d(index: Int) -> [GameSquare] {
-        if index < 0 || index >= self.squareCount { return [GameSquare]() }
+    public func Click1d(index: Int) -> GameStatus {
+        if index < 0 || index >= self.squareCount { return GameStatus(self.gameState) }
         
         return ClickSquare(self.squares[index])
     }
@@ -101,14 +102,18 @@ public class MineBoard {
     // - Transform that array into an array of GameSquares and return it
     // - Return an empty array if no squares are changed (e.g. user clicks on an already-clicked square)
     // - Return all squares with mines, if the user clicks on a mine
-    func ClickSquare(square: MineSquare!) -> [GameSquare] {
-        if square == nil { return [GameSquare]() }
+    func ClickSquare(square: MineSquare!) -> GameStatus {
+        if square == nil { return GameStatus(self.gameState) }
+        
+        if self.gameState == .Unstarted { self.gameState = .Ongoing }
         
         let squares = square.Clicked()
         let result = squares.ToGameSquares()
         
         // This next block will only fire if the user clicked on a mine.
         if result.count == 1 && result[0].HasMine {
+            self.gameState = .Lost
+            RegisterFinish()
             let mines = self.squares.filter({ $0.HasMine })
             
             for var mine in mines {
@@ -119,10 +124,34 @@ public class MineBoard {
 //            let coords = mines.map({return String(format: "%d,%d ", $0.x, $0.y)}).reduce("", combine: {$0 + $1})
 //            print(coords)
             
-            return mines.ToGameSquares()
+            return GameStatus(withState: self.gameState, withSquares: mines.ToGameSquares())
         }
         
-        return result
+        // And finally we want to do a quick test to see if the game is over.
+        if TestForWin() {
+            return GameStatus(withState: self.gameState, withSquares: self.squares.ToGameSquares())
+        }
+        
+        return GameStatus(withState: self.gameState, withSquares: result)
+    }
+    
+    // Return true if the user has revealed every non-mine square.  Else false.
+    // We know we've won if every non-mine square's IsVisible property was set to true (by either Click or NeighborClick)
+    func TestForWin() -> Bool {
+        for var square in self.squares {
+            if !square.IsVisible && !square.HasMine {
+                return false
+            }
+        }
+        self.gameState = .Won
+        self.RegisterFinish()
+        return true
+    }
+    
+    func RegisterFinish() {
+        for var square in self.squares {
+            square.RegisterFinish(self.gameState)
+        }
     }
     
     // MARK: - Helper methods
