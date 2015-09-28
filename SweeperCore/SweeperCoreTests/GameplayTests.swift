@@ -32,7 +32,7 @@ class GameplayTests: XCTestCase {
                 let square = board.SquareAt(xy.x, xy.y)!
                 if !square.HasMine {
                     let clicked = board.Click(xy.x, xy.y)  // clicked should now contain an array of >0 GameSquares including the square we traversed to.
-                    XCTAssert(clicked.count > 0, "Click() should return at least one object")
+                    XCTAssert(clicked.Squares.count > 0, "Click() should return at least one object")
                     return
                 }
             }
@@ -64,7 +64,7 @@ class GameplayTests: XCTestCase {
             }
             
             for var mine in mines {
-                if !clicked.contains({$0.x == mine.x && $0.y == mine.y}) {
+                if !clicked.Squares.contains({$0.x == mine.x && $0.y == mine.y}) {
                     XCTFail("Clicked does not contain a mine that is in board.mines")
                 }
             }
@@ -75,11 +75,24 @@ class GameplayTests: XCTestCase {
         }
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock {
-            // Put the code you want to measure the time of here.
+    func testFieldClearSpeed() {
+        // Having a problem with large zero-fields clearing too slowly.
+        // Build a board that's ALL zero-field and benchmark it.
+        let board = MineBoard(width: 15, height: 18, minePercent: 0.01) // iPad Air 2 dimensions
+        for var square in board.squares {
+            // Placing two mines at 7, 7 and 9, 7.  
+            // This means that after clearing, the square at 8, 7 will still be unclicked (and thus we don't also win)
+            square.HasMine = (square.x == 7 && square.y == 7) || (square.x == 9 && square.y == 7)
         }
+        board.mineCount = 1
+        self.measureBlock {
+                board.Click(8, 8)
+        }
+    }
+    
+    // Also having trouble with the time to "win" after clicking the last empty cell.
+    func testWinSpeed() {
+        let board = MineBoard(width: 15, height: 18, minePercent: 0.01) // iPad Air 2 dimensions
     }
     
 }

@@ -41,16 +41,15 @@ class SweeperGridViewController: UICollectionViewController {
     // Load a new board when the view loads.
     override func viewDidLoad() {
         
-//        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-//        layout.sectionInset = UIEdgeInsets(top: 20, left: 0, bottom: 10, right: 0)
-//        layout.itemSize = squareSize
-//        layout.minimumInteritemSpacing = 0.0
-//        layout.minimumLineSpacing = 0.0
-//        gridView.setCollectionViewLayout(layout, animated: false)
-        
-        loadNewBoard()
-        
         super.viewDidLoad()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if self.gameState == .Unstarted {
+            self.loadNewBoard()
+        }
     }
     
     // MARK: - Custom Operations
@@ -75,6 +74,7 @@ class SweeperGridViewController: UICollectionViewController {
         let bounds = self.view.bounds
         let x = bounds.width / squareSize.width
         let y = bounds.height / squareSize.height
+        
         return (width: Int(x), height: Int(y))
     }
     
@@ -86,11 +86,12 @@ class SweeperGridViewController: UICollectionViewController {
     
     // Receive a list of changed cells and (hopefully gracefully) change them in the CollectionView.
     func processChanges(changes: GameStatus) {
+        // Disable animation during reload
         self.gameState = changes.State
         let animationsEnabled = UIView.areAnimationsEnabled()
         UIView.setAnimationsEnabled(false)
         defer { UIView.setAnimationsEnabled(animationsEnabled) }
-
+        
         self.collectionView?.reloadItemsAtIndexPaths(
             changes.Squares.map({return NSIndexPath(forRow: $0.index, inSection: 0)})
         )
@@ -115,7 +116,7 @@ class SweeperGridViewController: UICollectionViewController {
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! MineSquareCell
-
+        
         cell.Attach(toViewController: self, atIndex: indexPath.row)
         
         let gameSquare = gameSquareForIndexPath(indexPath)
