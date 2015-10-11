@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreFoundation  // This is here to get a performance time measurement
 
 // The MineBoard class contains all Squares of the game.
 public class MineBoard {
@@ -22,6 +23,7 @@ public class MineBoard {
     public var Width: Int { get { return self.width } }
     public var Height: Int { get { return self.height } }
     public var SquareCount: Int { get { return self.squareCount } }
+    public var GameSquares: [GameSquare] { get { return self.squares.ToGameSquares() } }
     
     // MARK: - Initializer
     public init(width: Int, height: Int, minePercent: Float) {
@@ -129,7 +131,7 @@ public class MineBoard {
         
         // And finally we want to do a quick test to see if the game is over.
         if TestForWin() {
-            return GameStatus(withState: self.gameState, withSquares: self.squares.ToGameSquares())
+            return GameStatus(withState: self.gameState, withSquares: self.squares.ToGameSquares().filter({$0.HasMine || $0.index == square.index}))
         }
         
         return GameStatus(withState: self.gameState, withSquares: result)
@@ -138,6 +140,12 @@ public class MineBoard {
     // Return true if the user has revealed every non-mine square.  Else false.
     // We know we've won if every non-mine square's IsVisible property was set to true (by either Click or NeighborClick)
     func TestForWin() -> Bool {
+        let start = CFAbsoluteTimeGetCurrent()
+        defer {
+            let dur = CFAbsoluteTimeGetCurrent() - start
+            NSLog("TestForWin() exec: %f", dur)
+        }
+        
         for var square in self.squares {
             if !square.IsVisible && !square.HasMine {
                 return false

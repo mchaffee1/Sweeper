@@ -8,6 +8,7 @@
 
 import UIKit
 import SweeperCore
+import CoreFoundation
 
 class SweeperGridViewController: UICollectionViewController {
     
@@ -26,13 +27,15 @@ class SweeperGridViewController: UICollectionViewController {
     
     // mineBoard gets properly instantiated in LoadNewBoard()
     private var mineBoard = MineBoard(width:1, height:1, minePercent:0)
+    private var squares = [GameSquare]()
     
     private var gameState = GameState.Unstarted
     
     // This function returns a GameSquare corresponding to the 1-d index of a given cell.
     // Traversal is left-to-right, top-to-bottom.
     private func gameSquareForIndexPath(indexPath: NSIndexPath) -> GameSquare {
-        return mineBoard.SquareForIndex(indexPath.row)
+//        return mineBoard.SquareForIndex(indexPath.row)
+        return squares[indexPath.row]
     }
     
     
@@ -65,6 +68,7 @@ class SweeperGridViewController: UICollectionViewController {
         let gridSize = self.gridSize()
         
         mineBoard = MineBoard(width: gridSize.width, height: gridSize.height, minePercent: 0.1)
+        squares = mineBoard.GameSquares
         
         self.collectionView?.reloadData()
     }
@@ -92,9 +96,21 @@ class SweeperGridViewController: UICollectionViewController {
         UIView.setAnimationsEnabled(false)
         defer { UIView.setAnimationsEnabled(animationsEnabled) }
         
-        self.collectionView?.reloadItemsAtIndexPaths(
-            changes.Squares.map({return NSIndexPath(forRow: $0.index, inSection: 0)})
-        )
+        // Log the duration of the reloadItems operation
+        var indexPaths = [NSIndexPath](count: changes.Squares.count, repeatedValue: NSIndexPath(forRow: 0, inSection: 0))
+        
+        for var i = 0; i < changes.Squares.count; i++ {
+            let square = changes.Squares[i]
+            squares[square.index] = square
+            indexPaths[i] = NSIndexPath(forRow: square.index, inSection: 0)
+        }
+
+        let start = CFAbsoluteTimeGetCurrent()
+        var action = "reloadItemsAtIndexPaths"
+        
+        self.collectionView?.reloadItemsAtIndexPaths(indexPaths)
+
+        NSLog("%@ requires %f s for %d items", action, CFAbsoluteTimeGetCurrent() - start, changes.Squares.count)
     }
     
     // MARK: - Basic CollectionView operations
@@ -107,20 +123,19 @@ class SweeperGridViewController: UICollectionViewController {
     // Get item count.
     // The number of items is necessarily the board's square count.
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return mineBoard.SquareCount
+        return squares.count
     }
     
     // This is the data-binding operation.  When cellForItemAtIndexPath is called:
     // - Get the square for that location from the MineBoard
     // - Tell the cell to render that square
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! MineSquareCell
-        
+
         cell.Attach(toViewController: self, atIndex: indexPath.row)
         
         let gameSquare = gameSquareForIndexPath(indexPath)
-        
+
         cell.RenderGameSquare(gameSquare, forGameState: self.gameState)
         
         return cell
