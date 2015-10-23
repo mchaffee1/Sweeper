@@ -28,7 +28,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oue-UT-nJ9" customClass="MineSquareButton" customModule="Sweeper" customModuleProvider="target">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oue-UT-nJ9" customClass="MineSquareButton" customModule="Sweeper" customModuleProvider="target">
                                             <rect key="frame" x="1" y="1" width="48" height="48"/>
                                             <animations/>
                                             <state key="normal" title="1"/>
@@ -42,9 +42,13 @@
                                 </view>
                                 <animations/>
                                 <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="Oue-UT-nJ9" secondAttribute="trailing" constant="1" id="0AK-aT-CGH"/>
                                     <constraint firstItem="Oue-UT-nJ9" firstAttribute="leading" secondItem="r6g-ei-epR" secondAttribute="leadingMargin" id="2fI-1u-ovq"/>
                                     <constraint firstItem="Oue-UT-nJ9" firstAttribute="top" secondItem="r6g-ei-epR" secondAttribute="topMargin" id="5di-gB-SG5"/>
+                                    <constraint firstItem="Oue-UT-nJ9" firstAttribute="top" secondItem="r6g-ei-epR" secondAttribute="top" constant="1" id="GKg-cf-4pT"/>
                                     <constraint firstAttribute="trailingMargin" secondItem="Oue-UT-nJ9" secondAttribute="trailing" id="YKu-ge-BNt"/>
+                                    <constraint firstAttribute="bottom" secondItem="Oue-UT-nJ9" secondAttribute="bottom" constant="1" id="csU-lO-Jrg"/>
+                                    <constraint firstItem="Oue-UT-nJ9" firstAttribute="leading" secondItem="r6g-ei-epR" secondAttribute="leading" constant="1" id="e2g-Xd-Mnv"/>
                                     <constraint firstAttribute="bottomMargin" secondItem="Oue-UT-nJ9" secondAttribute="bottom" id="ra8-ib-2HC"/>
                                 </constraints>
                                 <edgeInsets key="layoutMargins" top="16" left="16" bottom="16" right="16"/>

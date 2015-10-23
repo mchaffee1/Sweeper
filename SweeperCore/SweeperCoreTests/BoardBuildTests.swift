@@ -28,8 +28,8 @@ class BoardBuildTests: XCTestCase {
         // Use XCTAssert and related functions to verify your tests produce the correct results.
         let x = 2
         let y = 2
-        let index = self.board!.IndexOf(x, y)
-        let coords = self.board!.CoordinatesOfIndex(index)
+        let index = self.board!.indexOf(x, y)
+        let coords = self.board!.coordinatesOfIndex(index)
         XCTAssertEqual(x, coords.x, "Input x should equal output x")
         XCTAssertEqual(y, coords.y, "Input y should equal output y")
     }
@@ -40,17 +40,17 @@ class BoardBuildTests: XCTestCase {
         let x = 6  // this means we're in column 6 (7th column) with 6 + (y stack) preceding
         let y = 3  // this means we're in row 3 (4th row) with 30 preceding
         let properIndex = 36
-        let index = self.board!.IndexOf(x, y)
+        let index = self.board!.indexOf(x, y)
         XCTAssertEqual(index, properIndex, "Hand-calculated index should equal Board-calculated index")
     }
     
     func testNeighborBuild() {
-        var square = self.board!.SquareAt(0, 0)!
-        XCTAssertEqual(square.Neighbors.count, 3, "Corner square should have 3 neighbors")
-        square = self.board!.SquareAt(5, 9)!
-        XCTAssertEqual(square.Neighbors.count, 5, "Top edge square should have 5 neighbors")
-        square = self.board!.SquareAt(5, 5)!
-        XCTAssertEqual(square.Neighbors.count, 8, "Middle square should have 8 neighbors")
+        var square = self.board!.squareAt(0, 0)!
+        XCTAssertEqual(square.neighbors.count, 3, "Corner square should have 3 neighbors")
+        square = self.board!.squareAt(5, 9)!
+        XCTAssertEqual(square.neighbors.count, 5, "Top edge square should have 5 neighbors")
+        square = self.board!.squareAt(5, 5)!
+        XCTAssertEqual(square.neighbors.count, 8, "Middle square should have 8 neighbors")
     }
     
     func testPerformanceExample() {

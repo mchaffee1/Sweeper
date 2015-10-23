@@ -14,20 +14,20 @@ import Foundation
 
 class MineSquare {
   //MARK: - Properties
-  let Board: MineBoard; // The board that contains this square
+  let board: MineBoard; // The board that contains this square
   let x: Int; // x index in the board.
   let y: Int; // y index in the board.
   let index: Int; // 1-d index in the board (l-to-r, top-to-bottom)
-  var HasMine = false; // True if there's a mine on this square
-  var IsFlagged = false;  // True if the user has planted a flag on this mine
-  var IsVisible = false;  // True if this square should show its state (neighbor mine count)
-  var IsClicked = false;  // True if the user has clicked on this square (i.e. True means show the neighbor count)
-  var Neighbors = [MineSquare](); // Pointers to the mine's <=8 neighbors
-  var NeighborMineCount = 0;  // Number of neighbor squares containing mines.  This will be built at the same time as the Neighbors array.
+  var hasMine = false; // True if there's a mine on this square
+  var isFlagged = false;  // True if the user has planted a flag on this mine
+  var isVisible = false;  // True if this square should show its state (neighbor mine count)
+  var isClicked = false;  // True if the user has clicked on this square (i.e. True means show the neighbor count)
+  var neighbors = [MineSquare](); // Pointers to the mine's <=8 neighbors
+  var neighborMineCount = 0;  // Number of neighbor squares containing mines.  This will be built at the same time as the Neighbors array.
   
   //MARK: - Initializers
   init(inBoard: MineBoard, atX: Int, atY: Int, atIndex: Int) {
-    self.Board = inBoard;
+    self.board = inBoard;
     self.x = atX;
     self.y = atY;
     self.index = atIndex;
@@ -37,8 +37,8 @@ class MineSquare {
   // Accept nils gracefully.
   func AddNeighbor(neighbor: MineSquare!) {
     if neighbor != nil {
-      self.Neighbors.append(neighbor)
-      self.NeighborMineCount += (neighbor.HasMine ? 1 : 0)
+      neighbors.append(neighbor)
+      neighborMineCount += (neighbor.hasMine ? 1 : 0)
     }
   }
   
@@ -47,18 +47,18 @@ class MineSquare {
   // 2) If the click trips a mine, return only this square.  The Board will interpret that as a bust and return all mines.
   // 3) If the click doesn't trip a mine, call NeighborClicked() on Self and each neighbor
   // 4) Return an array of all changed squares (can be 0 if no changes happened)
-  func Clicked() -> [MineSquare]{
+  func click() -> [MineSquare]{
     var result = [MineSquare]()
     
-    if !IsClicked {
-      IsClicked = true
+    if !isClicked {
+      isClicked = true
       
       // Return only this square if we just tripped a mine.  That's the signal to the Board that we have a problem.
-      if HasMine {
+      if hasMine {
         result.append(self)
         return result
       }
-      result = self.NeighborClicked()
+      result = self.neighborClicked()
     }
     
     return result
@@ -66,11 +66,11 @@ class MineSquare {
   
   // Call this when the user plants a flag in this square.
   // If the object's state changes, return the object; else nil.
-  func Flagged() -> MineSquare? {
+  func flag() -> MineSquare? {
     var result: MineSquare? = nil;
     
-    if !IsFlagged {
-      IsFlagged = true
+    if !isFlagged {
+      isFlagged = true
       result = self
     }
     
@@ -78,10 +78,10 @@ class MineSquare {
   }
   
   // Pass in end-of-game results here.
-  func RegisterFinish(state: GameState) {
+  func registerFinish(state: GameState) {
     if state == .Won {
-      IsVisible = true;
-      IsClicked = true;
+      isVisible = true;
+      isClicked = true;
     }
   }
   
@@ -90,18 +90,18 @@ class MineSquare {
   // 2) Set Self.IsVisible to True if !self.IsVisible and !self.IsFlagged (flagged cells don't halt propagation but also don't show themselves)
   // 3) If Self.NeighborMineCount == 0, then call this on all the neighbors.
   // 4) Return all (potentially 0) squares with changes.
-  func NeighborClicked() -> [MineSquare] {
+  func neighborClicked() -> [MineSquare] {
     var result = [MineSquare]()
     
-    if !IsVisible {
-      if !IsFlagged {
-        IsVisible = true
+    if !isVisible {
+      if !isFlagged {
+        isVisible = true
         result.append(self)
       }
       
-      if NeighborMineCount == 0 {
-        for neighbor in Neighbors.filter( {!$0.IsVisible}) {
-          result += neighbor.NeighborClicked()
+      if neighborMineCount == 0 {
+        for neighbor in neighbors.filter( {!$0.isVisible}) {
+          result += neighbor.neighborClicked()
         }
       }
     }
