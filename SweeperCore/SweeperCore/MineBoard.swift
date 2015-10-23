@@ -118,20 +118,17 @@ public class MineBoard {
             RegisterFinish()
             let mines = self.squares.filter({ $0.HasMine })
             
-            for var mine in mines {
+            for mine in mines {
                 mine.Clicked()
             }
 
-            // For testing purposes.
-//            let coords = mines.map({return String(format: "%d,%d ", $0.x, $0.y)}).reduce("", combine: {$0 + $1})
-//            print(coords)
-            
             return GameStatus(withState: self.gameState, withSquares: mines.ToGameSquares())
         }
         
         // And finally we want to do a quick test to see if the game is over.
+        // If the game has ended, return all squares for completeness's sake.
         if TestForWin() {
-            return GameStatus(withState: self.gameState, withSquares: self.squares.ToGameSquares().filter({$0.HasMine || $0.index == square.index}))
+            return GameStatus(withState: self.gameState, withSquares: self.squares.ToGameSquares())
         }
         
         return GameStatus(withState: self.gameState, withSquares: result)
@@ -140,13 +137,7 @@ public class MineBoard {
     // Return true if the user has revealed every non-mine square.  Else false.
     // We know we've won if every non-mine square's IsVisible property was set to true (by either Click or NeighborClick)
     func TestForWin() -> Bool {
-        let start = CFAbsoluteTimeGetCurrent()
-        defer {
-            let dur = CFAbsoluteTimeGetCurrent() - start
-            NSLog("TestForWin() exec: %f", dur)
-        }
-        
-        for var square in self.squares {
+        for square in self.squares {
             if !square.IsVisible && !square.HasMine {
                 return false
             }
@@ -157,7 +148,7 @@ public class MineBoard {
     }
     
     func RegisterFinish() {
-        for var square in self.squares {
+        for square in self.squares {
             square.RegisterFinish(self.gameState)
         }
     }

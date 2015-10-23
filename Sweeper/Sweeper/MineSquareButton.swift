@@ -37,7 +37,7 @@ class MineSquareButton  : UIButton {
         }
         
         if square.IsFlagged {
-            // draw a grey rectangle with a black border with a flag
+            // TODO: draw a grey rectangle with a black border with a flag
         }
         else if square.NeighborMineCount >= 0 {
             backgroundColor = touchedColor

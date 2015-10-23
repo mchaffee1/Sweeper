@@ -34,7 +34,7 @@ class SweeperGridViewController: UICollectionViewController {
     // This function returns a GameSquare corresponding to the 1-d index of a given cell.
     // Traversal is left-to-right, top-to-bottom.
     private func gameSquareForIndexPath(indexPath: NSIndexPath) -> GameSquare {
-//        return mineBoard.SquareForIndex(indexPath.row)
+        //        return mineBoard.SquareForIndex(indexPath.row)
         return squares[indexPath.row]
     }
     
@@ -42,11 +42,6 @@ class SweeperGridViewController: UICollectionViewController {
     // MARK: - UIViewController operations
     
     // Load a new board when the view loads.
-    override func viewDidLoad() {
-        
-        super.viewDidLoad()
-    }
-    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -54,7 +49,9 @@ class SweeperGridViewController: UICollectionViewController {
             self.loadNewBoard()
         }
     }
-    
+    // TODO:  Manage device rotation 
+    // (accept rotation only upon new-board operation; but possibly rotate individual UI elements?)
+
     // MARK: - Custom Operations
     
     private func NewButtonClicked() {
@@ -90,27 +87,31 @@ class SweeperGridViewController: UICollectionViewController {
     
     // Receive a list of changed cells and (hopefully gracefully) change them in the CollectionView.
     func processChanges(changes: GameStatus) {
-        // Disable animation during reload
         self.gameState = changes.State
+        
+        // Disable animation during reload
         let animationsEnabled = UIView.areAnimationsEnabled()
         UIView.setAnimationsEnabled(false)
         defer { UIView.setAnimationsEnabled(animationsEnabled) }
         
-        // Log the duration of the reloadItems operation
+        let changeCount = changes.Squares.count
+        // Store the received changes locally.
         var indexPaths = [NSIndexPath](count: changes.Squares.count, repeatedValue: NSIndexPath(forRow: 0, inSection: 0))
-        
-        for var i = 0; i < changes.Squares.count; i++ {
+        for var i = 0; i < changeCount; i++ {
             let square = changes.Squares[i]
             squares[square.index] = square
             indexPaths[i] = NSIndexPath(forRow: square.index, inSection: 0)
         }
-
-        let start = CFAbsoluteTimeGetCurrent()
-        var action = "reloadItemsAtIndexPaths"
         
-        self.collectionView?.reloadItemsAtIndexPaths(indexPaths)
-
-        NSLog("%@ requires %f s for %d items", action, CFAbsoluteTimeGetCurrent() - start, changes.Squares.count)
+        // Now we have to decide how to update the view.  reloadItemsAtIndexPaths() gets super slow for large
+        // counts, but is faster for small counts.  Meanwhile, reloadData() is fast and good, but causes a nasty
+        // flicker as items load out of order...
+//        if changeCount > 20 {
+//            self.collectionView?.reloadSections(NSIndexSet(index: 0))
+//        }
+//        else {
+            self.collectionView?.reloadItemsAtIndexPaths(indexPaths)
+//        }
     }
     
     // MARK: - Basic CollectionView operations
@@ -131,11 +132,11 @@ class SweeperGridViewController: UICollectionViewController {
     // - Tell the cell to render that square
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! MineSquareCell
-
+        
         cell.Attach(toViewController: self, atIndex: indexPath.row)
         
         let gameSquare = gameSquareForIndexPath(indexPath)
-
+        
         cell.RenderGameSquare(gameSquare, forGameState: self.gameState)
         
         return cell

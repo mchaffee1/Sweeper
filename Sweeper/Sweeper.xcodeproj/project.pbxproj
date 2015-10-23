@@ -7,17 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6077B96E1BB6F78E0000B54D /* SweeperGridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6077B96D1BB6F78E0000B54D /* SweeperGridViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		6077B96E1BB6F78E0000B54D /* SweeperGridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6077B96D1BB6F78E0000B54D /* SweeperGridViewController.swift */; };
 		6077B9741BB700180000B54D /* SweeperCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6077B9731BB700180000B54D /* SweeperCore.framework */; };
-		6077B9761BB703550000B54D /* MineSquareCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6077B9751BB703550000B54D /* MineSquareCell.swift */; settings = {ASSET_TAGS = (); }; };
-		6077B9771BB7274C0000B54D /* SweeperCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6077B9731BB700180000B54D /* SweeperCore.framework */; };
+		6077B9761BB703550000B54D /* MineSquareCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6077B9751BB703550000B54D /* MineSquareCell.swift */; };
 		6077B9781BB7274C0000B54D /* SweeperCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6077B9731BB700180000B54D /* SweeperCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		60873BCF1BB4A89700D79EE6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60873BCE1BB4A89700D79EE6 /* AppDelegate.swift */; };
 		60873BD41BB4A89700D79EE6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60873BD21BB4A89700D79EE6 /* Main.storyboard */; };
 		60873BD61BB4A89700D79EE6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60873BD51BB4A89700D79EE6 /* Assets.xcassets */; };
 		60873BE41BB4A89800D79EE6 /* SweeperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60873BE31BB4A89800D79EE6 /* SweeperTests.swift */; };
 		60873BEF1BB4A89800D79EE6 /* SweeperUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60873BEE1BB4A89800D79EE6 /* SweeperUITests.swift */; };
-		60873BFD1BB4AA0500D79EE6 /* MineSquareButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60873BFC1BB4AA0500D79EE6 /* MineSquareButton.swift */; settings = {ASSET_TAGS = (); }; };
+		60873BFD1BB4AA0500D79EE6 /* MineSquareButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60873BFC1BB4AA0500D79EE6 /* MineSquareButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,7 +74,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				6077B9741BB700180000B54D /* SweeperCore.framework in Frameworks */,
-				6077B9771BB7274C0000B54D /* SweeperCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -212,7 +210,7 @@
 		60873BC31BB4A89700D79EE6 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = "Michael Chaffee";
 				TargetAttributes = {
 					60873BCA1BB4A89700D79EE6 = {
