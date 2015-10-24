@@ -43,7 +43,7 @@ public class MineBoard {
     self.squares = [MineSquare]()
     for var i = 0; i < self.squareCount; i++ {
       let coords = coordinatesOfIndex(i)
-      let square = MineSquare(inBoard: self, atX: coords.x, atY: coords.y, atIndex: i)
+      let square = MineSquare(atX: coords.x, atY: coords.y, atIndex: i)
       square.hasMine = mines[i]
       self.squares.append(square)
     }

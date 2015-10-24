@@ -14,7 +14,6 @@ import Foundation
 
 class MineSquare {
   //MARK: - Properties
-  let board: MineBoard; // The board that contains this square
   let x: Int; // x index in the board.
   let y: Int; // y index in the board.
   let index: Int; // 1-d index in the board (l-to-r, top-to-bottom)
@@ -26,8 +25,7 @@ class MineSquare {
   var neighborMineCount = 0;  // Number of neighbor squares containing mines.  This will be built at the same time as the Neighbors array.
   
   //MARK: - Initializers
-  init(inBoard: MineBoard, atX: Int, atY: Int, atIndex: Int) {
-    self.board = inBoard;
+  init(atX: Int, atY: Int, atIndex: Int) {
     self.x = atX;
     self.y = atY;
     self.index = atIndex;
